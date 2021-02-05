@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,23 +12,24 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    margin: '20px',
+    margin: "20px",
     width: 500,
+    height: "auto",
   },
   image: {
     width: 128,
-    height: 128,
+    height: "auto",
   },
   title_link: {
     "&:hover": {
-       color: "darkblue",
-     }
-  }
+      color: "darkblue",
+    },
+  },
 }));
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, product: {productName, brandName} }) => {
   const classes = useStyles();
-
+  console.log(classes);
 
   return (
     <div className={classes.root}>
@@ -37,10 +38,11 @@ export const ProductCard = ({ product }) => {
           <Grid item>
             <ButtonBase className={classes.image}>
               <Image
-                alt="complex"
-                layout="fill"
+                alt={`Photo of ${productName.toLowerCase()}${productName && ','} ${brandName}`}
+                height="auto"
+                width="100%"
                 src={product.imageURLs[0]}
-                loading="lazy" 
+                loading="lazy"
               />
             </ButtonBase>
           </Grid>
@@ -48,10 +50,12 @@ export const ProductCard = ({ product }) => {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  <Link href={product.pdpURL}><a className={classes.title_link}>{product.productName}</a></Link>
+                  <Link href={product.pdpURL}>
+                    <a className={classes.title_link}>{productName}</a>
+                  </Link>
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {product.brandName}
+                  {brandName}
                 </Typography>
               </Grid>
             </Grid>
@@ -64,4 +68,3 @@ export const ProductCard = ({ product }) => {
     </div>
   );
 };
-
